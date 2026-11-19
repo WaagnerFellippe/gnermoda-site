@@ -15,9 +15,9 @@ const SELECTOR = [
   '[data-fit]',
   '.page-title', '.hero__shortcuts a', '.block__title', '.piece__name',
   '.handle', '.prow__title', '.section-title', '.kicker', '.about__end',
-  '.request__title', '.ref__handle', '.ref__empty', '.pcard__name',
+  '.request__title', '.ref__handle', '.ref__empty', '.ref__cta', '.pcard__name',
   '.nav__link', '.footer a', '.footer__title', '.tlink', '.btn', '.badge',
-  '.pcard__meta', '.form__hint', '.crumbs', '.specs dt', '.specs dd', 'figcaption',
+  '.pcard__meta', '.form__hint', '.look-card__title', '.bag-row__name', '.bag-row__meta', '.bag-link', '.crumbs', '.specs dt', '.specs dd', 'figcaption',
 ].join(',')
 
 const FITTED = 'data-fitted'
@@ -58,17 +58,25 @@ function longestWord(el: HTMLElement): number {
   for (let m = re.exec(text); m; m = re.exec(text)) {
     // mede trecho a trecho e soma: uma "palavra" com hífen ou @ pode estar
     // dividida entre linhas ou entre pedaços de texto
-    let w = 0
+    const rects: DOMRect[] = []
     let i = m.index
     const end = m.index + m[0].length
     while (i < end) {
       const [node, off] = at(i)
       const stop = Math.min(end - i, node.data.length - off)
+      if (stop <= 0) break
       range.setStart(node, off)
       range.setEnd(node, off + stop)
-      for (const r of range.getClientRects()) w += r.width
+      for (const r of range.getClientRects()) if (r.width > 0) rects.push(r)
       i += stop
     }
+    if (!rects.length) continue
+    // tudo na mesma linha: mede de ponta a ponta (inclui espaçamento entre pedaços,
+    // ex.: a margem antes da seta ↗); dividido em linhas: soma os pedaços
+    const sameLine = rects.every((r) => Math.abs(r.top - rects[0].top) < 2)
+    const w = sameLine
+      ? Math.max(...rects.map((r) => r.right)) - Math.min(...rects.map((r) => r.left))
+      : rects.reduce((a, r) => a + r.width, 0)
     max = Math.max(max, w)
   }
   el.style.overflowWrap = prev

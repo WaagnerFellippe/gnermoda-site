@@ -1,6 +1,6 @@
 import { Link } from 'react-router-dom'
-import { site } from '../config/site'
-import { contato, fotos, home, referencias } from '../data/content'
+import { contato, fotos, home } from '../data/content'
+import { instagramUrl, useContacts, useReferences } from '../lib/siteData'
 import { listPieces, listPublishedProjects } from '../lib/api'
 import { CATEGORIES, waGeneral } from '../lib/format'
 import { PieceCard } from '../components/PieceCard'
@@ -15,6 +15,7 @@ const ATALHOS = [
 ]
 
 export default function Home() {
+  const contacts = useContacts()
   useMeta()
   const pieces = useAsync(listPieces, [])
   const projects = useAsync(listPublishedProjects, [])
@@ -117,8 +118,8 @@ export default function Home() {
         </div>
         <p className="lead">{contato.abertura}</p>
         <p className="handle">
-          <a href={`https://instagram.com/${site.instagram}`} target="_blank" rel="noopener noreferrer">
-            @{site.instagram}
+          <a href={instagramUrl(contacts.instagram)} target="_blank" rel="noopener noreferrer">
+            @{contacts.instagram}
           </a>
         </p>
         <div className="btn-row">
@@ -133,27 +134,56 @@ export default function Home() {
 }
 
 export function RefGrid() {
+  const referencias = useReferences()
+  if (!referencias.length) return null
   return (
     <ul className="refs">
-      {referencias.map((r) => (
-        <li key={r.handle} className="ref">
+      {referencias.map((r) => {
+        const media = (
           <div className="ref__media">
-            {r.image ? (
-              <Img image={staticImg(r.image, r.w!, r.h!, `Referência visual de ${r.handle}`)} sizes="(max-width: 700px) 50vw, 25vw" className="bw" />
+            {r.path && r.width && r.height ? (
+              <Img
+                image={{ path: r.path, thumb: r.thumb, width: r.width, height: r.height, alt: r.alt || `Referência visual de ${r.handle}` }}
+                sizes="(max-width: 700px) 50vw, 25vw"
+              />
             ) : (
               <span className="ref__empty">{r.handle}</span>
             )}
+            {r.url && (
+              <span className="ref__cta" aria-hidden="true">
+                <span className="ref__cta-long">{/instagram\.com/i.test(r.url) ? 'Ver no Instagram' : 'Ver perfil'} ↗</span>
+                <span className="ref__cta-short">{/instagram\.com/i.test(r.url) ? 'Instagram' : 'Perfil'} ↗</span>
+              </span>
+            )}
           </div>
-          {r.url ? (
-            <a className="ref__handle" href={r.url} target="_blank" rel="noopener noreferrer">
+        )
+        const text = (
+          <>
+            <span className="ref__handle">
               {r.handle}
-            </a>
-          ) : (
-            <span className="ref__handle">{r.handle}</span>
-          )}
-          {r.caption && <p className="ref__caption">{r.caption}</p>}
-        </li>
-      ))}
+              {r.url && <span className="ref__arrow" aria-hidden="true">{'\u2060'}↗</span>}
+            </span>
+            {r.caption && <span className="ref__caption">{r.caption}</span>}
+          </>
+        )
+        return (
+          <li key={r.id} className="ref">
+            {r.url ? (
+              // o card inteiro (foto + nome) leva ao perfil
+              <a className="ref__card" href={r.url} target="_blank" rel="noopener noreferrer">
+                {media}
+                {text}
+                <span className="sr-only"> (abre em nova aba)</span>
+              </a>
+            ) : (
+              <div className="ref__card">
+                {media}
+                {text}
+              </div>
+            )}
+          </li>
+        )
+      })}
     </ul>
   )
 }

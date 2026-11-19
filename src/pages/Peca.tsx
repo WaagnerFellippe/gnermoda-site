@@ -1,11 +1,12 @@
 import { useState } from 'react'
 import { Link, useParams } from 'react-router-dom'
 import { acervo } from '../data/content'
-import { getPiece } from '../lib/api'
+import { getPiece, listPublishedLooks } from '../lib/api'
 import { imageUrl } from '../lib/supabase'
-import { STATUS, byPosition, categoryLabel, projectUrl, sizeLabel, waPiece } from '../lib/format'
+import { STATUS, byPosition, categoryLabel, lookUrl, projectUrl, sizeLabel, waPiece } from '../lib/format'
 import type { Piece } from '../lib/types'
 import { Arrow, Img, LoadError, StatusBadge, WhatsIcon, useAsync, useMeta } from '../components/ui'
+import { AddToBag } from '../components/Bag'
 import NotFound from './NotFound'
 
 export default function Peca() {
@@ -26,6 +27,8 @@ function PieceView({ piece }: { piece: Piece }) {
   const projects = (piece.project_pieces ?? []).map((pp) => pp.projects).filter((p) => p && p.status === 'published')
   const available = STATUS[piece.status].available
   const tam = sizeLabel(piece.sizes)
+  const { data: allLooks } = useAsync(() => listPublishedLooks().catch(() => []), [])
+  const looks = (allLooks ?? []).filter((l) => l.pieces.some((p) => p.id === piece.id))
 
   const rows: [string, string | null | undefined][] = [
     ['Categoria', categoryLabel(piece.category)],
@@ -93,6 +96,20 @@ function PieceView({ piece }: { piece: Piece }) {
               ))}
             </p>
           )}
+
+          {looks.length > 0 && (
+            <p className="appears">
+              <span>Aparece nos looks:</span>{' '}
+              {looks.map((l, i) => (
+                <span key={l.id}>
+                  {i > 0 && ', '}
+                  <Link to={lookUrl(l)}>{l.title}</Link>
+                </span>
+              ))}
+            </p>
+          )}
+
+          <AddToBag piece={piece} />
 
           <RequestBox piece={piece} available={available} />
         </div>

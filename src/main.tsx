@@ -5,6 +5,7 @@ import '@fontsource-variable/archivo/wdth-italic.css'
 import './styles/global.css'
 import App from './App'
 import { startFitText } from './lib/fitText'
+import { startSiteData } from './lib/siteData'
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
@@ -12,4 +13,5 @@ createRoot(document.getElementById('root')!).render(
   </StrictMode>,
 )
 
+startSiteData()
 startFitText()

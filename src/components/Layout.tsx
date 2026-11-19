@@ -1,13 +1,16 @@
 import { useEffect, useState } from 'react'
 import { Link, NavLink, Outlet, useLocation } from 'react-router-dom'
 import { site } from '../config/site'
+import { instagramUrl, useContacts } from '../lib/siteData'
 import { waGeneral } from '../lib/format'
 import { Logo } from './ui'
 import { ThemeToggle } from './ThemeToggle'
+import { BagLink } from './Bag'
 
 const NAV = [
   { to: '/', label: 'Home', end: true },
   { to: '/acervo', label: 'Acervo' },
+  { to: '/looks', label: 'Looks' },
   { to: '/projetos', label: 'Projetos' },
   { to: '/sobre-mim', label: 'Sobre mim' },
   { to: '/referencias', label: 'Referências' },
@@ -31,6 +34,7 @@ export function Layout() {
           <Logo />
         </Link>
         <div className="header__tools">
+          <BagLink />
           <ThemeToggle />
         <button
           className="menu-btn"
@@ -58,6 +62,7 @@ export function Layout() {
 }
 
 function Footer() {
+  const contacts = useContacts()
   return (
     <footer className="footer">
       <div className="footer__top">
@@ -82,16 +87,16 @@ function Footer() {
             <h2 className="footer__title">Contact</h2>
             <ul>
               <li>
-                <a href={`https://instagram.com/${site.instagram}`} target="_blank" rel="noopener noreferrer">
-                  @{site.instagram}
+                <a href={instagramUrl(contacts.instagram)} target="_blank" rel="noopener noreferrer">
+                  @{contacts.instagram}
                 </a>
               </li>
               <li>
-                <a href={`mailto:${site.email}`}>{site.email}</a>
+                <a href={`mailto:${contacts.email}`}>{contacts.email}</a>
               </li>
               <li>
                 <a href={waGeneral()} target="_blank" rel="noopener noreferrer">
-                  WhatsApp — <span className="nowrap">{site.whatsappLabel}</span>
+                  WhatsApp — <span className="nowrap">{contacts.whatsappLabel}</span>
                 </a>
               </li>
             </ul>

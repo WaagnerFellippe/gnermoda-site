@@ -1,7 +1,7 @@
 import { Link } from 'react-router-dom'
-import { site } from '../config/site'
 import { contato, fotos, referenciasAbertura, sobreMim } from '../data/content'
 import { waGeneral } from '../lib/format'
+import { instagramUrl, useContacts } from '../lib/siteData'
 import { ButtonLink, Img, Rich, Star, WhatsIcon, staticImg, useMeta } from '../components/ui'
 import { RefGrid } from './Home'
 
@@ -51,6 +51,7 @@ export function Referencias() {
 
 export function Contato() {
   useMeta('Contato', contato.abertura)
+  const c = useContacts()
   return (
     <div className="page contact">
       <Star className="star--corner" />
@@ -59,13 +60,13 @@ export function Contato() {
         <p className="lead">{contato.abertura}</p>
       </header>
       <p className="handle handle--big">
-        <a href={`https://instagram.com/${site.instagram}`} target="_blank" rel="noopener noreferrer">
-          @{site.instagram}
+        <a href={instagramUrl(c.instagram)} target="_blank" rel="noopener noreferrer">
+          @{c.instagram}
         </a>
       </p>
       <div className="btn-row">
-        <a className="btn" href={`mailto:${site.email}`}>
-          <span>Enviar e-mail ({site.email})</span>
+        <a className="btn" href={`mailto:${c.email}`}>
+          <span>Enviar e-mail ({c.email})</span>
         </a>
         <a className="btn btn--solid" href={waGeneral()} target="_blank" rel="noopener noreferrer">
           <WhatsIcon /> <span>WhatsApp</span>

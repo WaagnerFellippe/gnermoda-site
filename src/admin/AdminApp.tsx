@@ -7,6 +7,11 @@ import ProjectsList from './ProjectsList'
 import ProjectEditor from './ProjectEditor'
 import PiecesList from './PiecesList'
 import PieceEditor from './PieceEditor'
+import ReferencesList from './ReferencesList'
+import ReferenceEditor from './ReferenceEditor'
+import ContactsEditor from './ContactsEditor'
+import LooksList from './LooksList'
+import LookEditor from './LookEditor'
 import './admin.css'
 
 export default function AdminApp() {
@@ -52,6 +57,9 @@ export default function AdminApp() {
         <nav>
           <NavLink to="/admin/projetos">Projetos &amp; Cases</NavLink>
           <NavLink to="/admin/acervo">Acervo</NavLink>
+          <NavLink to="/admin/looks">Looks</NavLink>
+          <NavLink to="/admin/referencias">Referências</NavLink>
+          <NavLink to="/admin/contatos">Contatos</NavLink>
           <a href="/" target="_blank" rel="noopener">Ver site ↗</a>
         </nav>
         <div className="a-user">
@@ -66,6 +74,11 @@ export default function AdminApp() {
           <Route path="projetos/:id" element={<ProjectEditor />} />
           <Route path="acervo" element={<PiecesList />} />
           <Route path="acervo/:id" element={<PieceEditor />} />
+          <Route path="looks" element={<LooksList />} />
+          <Route path="looks/:id" element={<LookEditor />} />
+          <Route path="referencias" element={<ReferencesList />} />
+          <Route path="referencias/:id" element={<ReferenceEditor />} />
+          <Route path="contatos" element={<ContactsEditor />} />
           <Route path="*" element={<Navigate to="projetos" replace />} />
         </Routes>
       </main>

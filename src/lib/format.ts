@@ -1,5 +1,6 @@
 import { site } from '../config/site'
 import type { ImageRef, Piece, PieceCategory, PieceStatus, Project } from './types'
+import { getContacts } from './siteData'
 
 export const CATEGORIES: { value: PieceCategory; label: string }[] = [
   { value: 'superior', label: 'Superior' },
@@ -47,6 +48,7 @@ export function slugify(s: string): string {
 
 export const pieceUrl = (p: Pick<Piece, 'slug'>) => `/acervo/${p.slug}`
 export const projectUrl = (p: Pick<Project, 'slug'>) => `/projetos/${p.slug}`
+export const lookUrl = (l: { slug: string }) => `/looks/${l.slug}`
 
 export function coverOf(images: ImageRef[] = []): ImageRef | undefined {
   const sorted = [...images].sort((a, b) => (a.position ?? 0) - (b.position ?? 0))
@@ -56,7 +58,8 @@ export const byPosition = <T extends { position?: number }>(xs: T[] = []) =>
   [...xs].sort((a, b) => (a.position ?? 0) - (b.position ?? 0))
 
 // ---------- WhatsApp -------------------------------------------------
-export const waLink = (text: string) => `https://wa.me/${site.whatsapp}?text=${encodeURIComponent(text)}`
+// número vem do painel (Contatos); usa sempre o valor mais recente
+export const waLink = (text: string) => `https://wa.me/${getContacts().whatsapp}?text=${encodeURIComponent(text)}`
 
 export const waGeneral = () =>
   waLink('Olá, Gner! Vim pelo site GNER.MODA e gostaria de mais informações.')

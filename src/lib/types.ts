@@ -69,3 +69,20 @@ export interface Project {
   project_credits?: Credit[]
   project_pieces?: { position: number; pieces: Piece | null }[]
 }
+
+export interface Look {
+  id: string
+  slug: string
+  title: string
+  description?: string | null
+  path?: string | null
+  thumb?: string | null
+  width?: number | null
+  height?: number | null
+  alt?: string | null
+  status: ProjectStatus
+  position: number
+  updated_at?: string
+  /** peças do look, na ordem definida no painel */
+  pieces: Piece[]
+}

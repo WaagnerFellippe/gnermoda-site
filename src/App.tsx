@@ -7,6 +7,8 @@ import Peca from './pages/Peca'
 import Projetos from './pages/Projetos'
 import Projeto from './pages/Projeto'
 import NotFound, { Contato, Referencias, SobreMim } from './pages/Static'
+import Looks, { LookPage } from './pages/Looks'
+import Sacola from './pages/Sacola'
 
 // O painel é carregado à parte: visitantes não baixam esse código.
 const Admin = lazy(() => import('./admin/AdminApp'))
@@ -27,6 +29,9 @@ export default function App() {
           <Route index element={<Home />} />
           <Route path="acervo" element={<Acervo />} />
           <Route path="acervo/:slug" element={<Peca />} />
+          <Route path="looks" element={<Looks />} />
+          <Route path="looks/:slug" element={<LookPage />} />
+          <Route path="sacola" element={<Sacola />} />
           <Route path="projetos" element={<Projetos />} />
           <Route path="projetos/:slug" element={<Projeto />} />
           <Route path="sobre-mim" element={<SobreMim />} />
