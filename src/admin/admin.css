@@ -1,15 +1,19 @@
 /* Painel administrativo — funcional e sóbrio, mesma paleta do site */
-.admin { min-height: 100vh; background: #f6f6f6; font-size: 15px; }
+.admin {
+  --red: #b80000; --ink: #0b0b0b; --paper: #ffffff; --gray: #efefef; --line: #d9d9d9; --muted: #5c5c5c;
+  color-scheme: light; color: var(--ink); position: relative; z-index: 1;
+  min-height: 100vh; background: #f6f6f6; font-size: 15px;
+}
 .a-top { position: sticky; top: 0; z-index: 10; display: flex; align-items: center; gap: 2rem; padding: .8rem 1.5rem; background: var(--ink); color: #fff; flex-wrap: wrap; }
 .a-brand { font: 800 1.05rem var(--display); color: #fff; text-decoration: none; letter-spacing: .02em; }
 .a-brand span { color: var(--red); font-weight: 600; }
-.a-top nav { display: flex; gap: 1.4rem; flex: 1; }
+.a-top nav { display: flex; flex-wrap: wrap; gap: .4rem 1.4rem; flex: 1; }
 .a-top nav a { color: #cfcfcf; text-decoration: none; padding: .3rem 0; border-bottom: 2px solid transparent; }
 .a-top nav a.active, .a-top nav a:hover { color: #fff; border-bottom-color: var(--red); }
 .a-user { display: flex; gap: 1rem; align-items: center; font-size: .85rem; color: #bdbdbd; }
 .a-user .a-link { color: #fff; }
 .a-main { max-width: 1100px; margin: 0 auto; padding: 1.8rem 1.5rem 8rem; }
-.a-head { display: flex; justify-content: space-between; align-items: flex-end; gap: 1rem; margin-bottom: 1.2rem; }
+.a-head { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: flex-end; gap: 1rem; margin-bottom: 1.2rem; }
 .a-head h1 { font: 800 1.9rem/1.1 var(--display); margin: .3rem 0; }
 .a-center { max-width: 420px; margin: 12vh auto; padding: 0 1.2rem; }
 .a-box { background: #fff; border: 1px solid var(--line); padding: 2rem; display: grid; gap: 1rem; }
@@ -19,7 +23,7 @@
   min-height: 40px; padding: .45rem .6rem; border: 1px solid #cfcfcf; background: #fff; border-radius: 0; width: 100%;
 }
 .ed textarea { resize: vertical; line-height: 1.5; }
-.a-btn { display: inline-flex; align-items: center; gap: .4rem; min-height: 40px; padding: .45rem 1rem; border: 1.5px solid var(--ink); background: #fff; cursor: pointer; text-decoration: none; font-weight: 500; white-space: nowrap; }
+.a-btn { display: inline-flex; align-items: center; gap: .4rem; min-height: 40px; padding: .45rem 1rem; border: 1.5px solid var(--ink); background: #fff; cursor: pointer; text-decoration: none; font-weight: 500; }
 .a-btn:hover:not(:disabled) { background: var(--ink); color: #fff; }
 .a-btn:disabled { opacity: .5; cursor: wait; }
 .a-btn--primary { background: var(--ink); color: #fff; }
@@ -56,7 +60,7 @@
 .a-row__title { font-weight: 600; text-decoration: none; }
 .a-row__title:hover { color: var(--red); }
 .a-row__sub { color: var(--muted); font-size: .82rem; }
-.a-row__links { display: flex; gap: .9rem; font-size: .88rem; }
+.a-row__links { display: flex; flex-wrap: wrap; gap: .3rem .9rem; font-size: .88rem; }
 .a-row__links a { color: inherit; }
 .a-pill { font-size: .72rem; text-transform: uppercase; letter-spacing: .08em; padding: .15rem .5rem; border: 1px solid; white-space: nowrap; }
 .a-pill--draft { color: #8a5a00; }
@@ -83,7 +87,7 @@
 .ed__slug span { display: flex; align-items: center; padding: 0 .6rem; background: #f0f0f0; border: 1px solid #cfcfcf; border-right: 0; color: var(--muted); font-size: .85rem; white-space: nowrap; }
 .ed__bar { position: sticky; bottom: 0; z-index: 5; background: #fff; border-top: 2px solid var(--ink); padding: .9rem 1.2rem; display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: .8rem; box-shadow: 0 -6px 18px rgba(0,0,0,.05); }
 .ed__actions { display: flex; flex-wrap: wrap; gap: .5rem; margin-left: auto; }
-@media (max-width: 700px) { .ed__grid { grid-template-columns: 1fr; } .a-row { flex-wrap: wrap; } }
+@media (max-width: 43.75em) { .ed__grid { grid-template-columns: 1fr; } .a-row { flex-wrap: wrap; } }
 
 .cred { list-style: none; padding: 0; margin: 0 0 .8rem; display: grid; gap: .4rem; }
 .cred li { display: grid; grid-template-columns: 1fr 1.4fr auto auto auto; gap: .5rem; align-items: center; }

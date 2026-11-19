@@ -3,6 +3,7 @@ import { Link, NavLink, Outlet, useLocation } from 'react-router-dom'
 import { site } from '../config/site'
 import { waGeneral } from '../lib/format'
 import { Logo } from './ui'
+import { ThemeToggle } from './ThemeToggle'
 
 const NAV = [
   { to: '/', label: 'Home', end: true },
@@ -29,6 +30,8 @@ export function Layout() {
         <Link to="/" className="header__logo" aria-label={`${site.name} — início`}>
           <Logo />
         </Link>
+        <div className="header__tools">
+          <ThemeToggle />
         <button
           className="menu-btn"
           aria-expanded={open}
@@ -37,6 +40,7 @@ export function Layout() {
         >
           {open ? 'Fechar' : 'Menu'}
         </button>
+        </div>
         <nav id="menu" className={`nav${open ? ' nav--open' : ''}`} aria-label="Principal">
           {NAV.map((n) => (
             <NavLink key={n.to} to={n.to} end={n.end} className="nav__link">
@@ -57,9 +61,11 @@ function Footer() {
   return (
     <footer className="footer">
       <div className="footer__top">
-        <Logo invert />
+        <Link to="/" className="footer__logo" aria-label={`${site.name} — início`}>
+          <Logo />
+        </Link>
         <div className="footer__cols">
-          <div>
+          <div className="footer__col">
             <h2 className="footer__title">Explore</h2>
             <ul>
               {NAV.map((n) => (
@@ -72,7 +78,7 @@ function Footer() {
               </li>
             </ul>
           </div>
-          <div>
+          <div className="footer__col">
             <h2 className="footer__title">Contact</h2>
             <ul>
               <li>
@@ -85,7 +91,7 @@ function Footer() {
               </li>
               <li>
                 <a href={waGeneral()} target="_blank" rel="noopener noreferrer">
-                  WhatsApp — {site.whatsappLabel}
+                  WhatsApp — <span className="nowrap">{site.whatsappLabel}</span>
                 </a>
               </li>
             </ul>

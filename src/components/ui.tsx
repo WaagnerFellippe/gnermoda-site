@@ -4,10 +4,15 @@ import { imageUrl } from '../lib/supabase'
 import type { ImageRef, PieceStatus } from '../lib/types'
 import { STATUS } from '../lib/format'
 import { site } from '../config/site'
+import { LOGO_PATH, LOGO_VIEWBOX } from '../assets/logo'
 
-/** Logo: troque o arquivo public/logo.svg pelo logo oficial. */
-export function Logo({ invert = false }: { invert?: boolean }) {
-  return <img src="/logo.svg" alt={site.name} className={`logo${invert ? ' logo--invert' : ''}`} width={160} height={40} />
+/** Logo: assinatura GNER.MODA® em vetor. Herda a cor do texto (muda com o tema). */
+export function Logo({ className = '' }: { invert?: boolean; className?: string }) {
+  return (
+    <svg className={`logo ${className}`} viewBox={LOGO_VIEWBOX} role="img" aria-label={site.name} focusable="false">
+      <path fill="currentColor" fillRule="evenodd" d={LOGO_PATH} />
+    </svg>
+  )
 }
 
 /** Estrela/swoosh vermelho — elemento gráfico da identidade. */
